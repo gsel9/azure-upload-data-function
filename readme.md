@@ -15,3 +15,7 @@ Scope: Storage Account or container
 Any key–value pair you add under: 
 Azure Portal → Function App → Configuration → Application settings 
 is injected into your Function App’s environment at runtime.
+
+Set Storage account credentials as env variables (Function App > Settings > Env variables)
+    - Add AzureWebJobsStorage__accountName + name of storage account
+    - Add AzureWebJobsStorage__credential + managedidentity

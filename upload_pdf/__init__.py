@@ -33,6 +33,11 @@ def get_blob_service_client() -> BlobServiceClient:
 
 @app.post("/upload_pdf")
 async def upload_pdf(args: InputArgs):
+    blob_service = get_blob_service_client()
+    container = blob_service.get_container_client(args.container_name)
+    filenames = [blob.name for blob in container.list_blobs()]
+    return {"files": filenames}
+    """
     try:
         data_dir = Path(args.data_dir)
         if not data_dir.exists():
@@ -43,6 +48,8 @@ async def upload_pdf(args: InputArgs):
 
         blob_service = get_blob_service_client()
         container = blob_service.get_container_client(args.container_name)
+        filenames = [blob.name for blob in container.list_blobs()]
+        return {"files": filenames}
 
         # Ensure container exists
         try:
@@ -63,7 +70,7 @@ async def upload_pdf(args: InputArgs):
                 blob_client.upload_blob(data, overwrite=True)
 
             uploaded.append(blob_name)
-
+        """
         return {"status": "ok", "uploaded": uploaded}
 
     except Exception as ex:
